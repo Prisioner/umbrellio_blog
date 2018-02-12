@@ -12,7 +12,7 @@ class Api::V1::PostsController < Api::V1::BaseController
   end
 
   def top
-    @posts = Post.top(params[:count])
+    @posts = Post.top(params[:count].to_i)
 
     respond_to do |format|
       format.json { render json: { code: 200, posts: @posts.map { |p| PostSerializer.new(p) } }, status: 200 }
