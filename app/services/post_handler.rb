@@ -1,6 +1,5 @@
 class PostHandler
   include ActiveModel::Validations
-  include ActiveModel::Callbacks
   include ActiveModel::Serialization
 
   validates :title, presence: true
@@ -9,7 +8,6 @@ class PostHandler
   validates :username, presence: true
 
   define_model_callbacks :initialize, only: [:after]
-  after_initialize :valid?
 
   attr_reader :username, :title, :body, :ip
 
@@ -20,12 +18,10 @@ class PostHandler
   end
 
   def initialize(params)
-    run_callbacks :initialize do
-      @username = params[:username]
-      @title = params[:title]
-      @body = params[:body]
-      @ip = params[:ip]
-    end
+    @username = params[:username]
+    @title = params[:title]
+    @body = params[:body]
+    @ip = params[:ip]
   end
 
   def create_post
