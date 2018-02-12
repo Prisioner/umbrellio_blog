@@ -4,5 +4,5 @@ class Post < ApplicationRecord
 
   delegate :username, to: :user
 
-  scope :top, ->(count) { order_by(:rating).limit(count) }
+  scope :top, ->(count) { order(:rating).limit(count) }
 end
