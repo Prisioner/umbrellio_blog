@@ -7,8 +7,6 @@ class PostHandler
   validates :ip, presence: true, ip: true
   validates :username, presence: true
 
-  define_model_callbacks :initialize, only: [:after]
-
   attr_reader :username, :title, :body, :ip
 
   def self.execute(params)
