@@ -5,7 +5,7 @@ RSpec.describe PostHandler do
     let!(:post_params) { attributes_for(:post) }
     let!(:valid_handler) { PostHandler.new(post_params) }
 
-    it 'everithing ok' do
+    it 'everything ok' do
       expect(valid_handler).to be_valid
     end
 
