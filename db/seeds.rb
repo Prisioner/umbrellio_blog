@@ -6,21 +6,25 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+# count of posts, users & ip addresses to generate
+POST_COUNT = 250_000
+USER_COUNT = 120
+IP_ADDRESS_COUNT = 60
 
-# generate 120 uniq usernames
+# generate uniq usernames
 usernames = []
-120.times { usernames << Faker::Internet.unique.user_name }
+USER_COUNT.times { usernames << Faker::Internet.unique.user_name }
 
-# generate 60 uniq IP addresses
+# generate uniq IP addresses
 ip_addresses = []
-60.times { ip_addresses << Faker::Internet.unique.ip_v4_address }
+IP_ADDRESS_COUNT.times { ip_addresses << Faker::Internet.unique.ip_v4_address }
 
 # grant each user 1..5 ips to post with
 # { username: 'Vasya', ip: ['1.1.1.1', '2.2.2.2', '3.3.3.3']}
 usernames_with_ips = usernames.map { |u| { username: u, ip: ip_addresses.sample(rand(1..5)) } }
 
-# creating 250k posts
-250_000.times do
+# creating posts
+POST_COUNT.times do
   # peak random user
   user = usernames_with_ips.sample
   username = user[:username]
