@@ -110,21 +110,21 @@ RSpec.describe Api::V1::PostsController, type: :controller do
     end
 
     context 'with invalid params' do
-      it 'returns code 200' do
+      it 'returns code 422' do
         get :top, params: { count: nil }, format: :json
 
         code = JSON.parse(response.body)['code']
 
-        expect(code).to eq 200
-        expect(response.code).to eq '200'
+        expect(code).to eq 422
+        expect(response.code).to eq '422'
       end
 
-      it 'returns empty post array'do
+      it 'returns errors' do
         get :top, params: { count: nil }, format: :json
 
         json = JSON.parse(response.body)
 
-        expect(json['posts']).to be_empty
+        expect(json['errors']).to be
       end
     end
   end

@@ -8,8 +8,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   let!(:post_params5) { attributes_for(:post, ip: '3.3.3.3', username: 'Petya') }
   let!(:expected_result) do
     [
-        { ip: '1.1.1.1', users: ['Vasya', 'Kolya'] },
-        { ip: '3.3.3.3', users: ['Vasya', 'Petya'] }
+        { ip: '1.1.1.1', users: ['Kolya', 'Vasya'] },
+        { ip: '3.3.3.3', users: ['Petya', 'Vasya'] }
     ]
   end
 
@@ -27,7 +27,12 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
       data = JSON.parse(response.body)['data'].map(&:symbolize_keys)
 
-      expect(data).to contain_exactly(*expected_result)
+      data.each do |group|
+        ip = group[:ip]
+        expected_users = expected_result.find { |e| e[:ip] == ip }[:users]
+
+        expect(group[:users]).to contain_exactly(*expected_users)
+      end
     end
 
     it 'returns code 200' do

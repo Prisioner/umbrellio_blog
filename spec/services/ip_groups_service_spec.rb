@@ -25,7 +25,12 @@ RSpec.describe IPGroupsService do
     it 'returns array of ip groups' do
       result = IPGroupsService.execute
 
-      expect(result).to contain_exactly(*expected_result)
+      result.each do |group|
+        ip = group[:ip]
+        expected_users = expected_result.find { |e| e[:ip] == ip }[:users]
+
+        expect(group[:users]).to contain_exactly(*expected_users)
+      end
     end
   end
 end
