@@ -1,4 +1,11 @@
 class Api::V1::PostsController < Api::V1::BaseController
+  api :POST, '/v1/posts', I18n.t('doc.v1.posts.create')
+  param :post, Hash do
+    param :title, String, required: true
+    param :body, String, required: true
+    param :ip, String, required: true
+    param :username, String, required: true
+  end
   def create
     @post = PostHandler.execute(post_params)
 
@@ -11,6 +18,8 @@ class Api::V1::PostsController < Api::V1::BaseController
     end
   end
 
+  api :GET, '/v1/posts/top', I18n.t('doc.v1.posts.top')
+  param :count, :number, required: true
   def top
     @posts = Post.top(params[:count].to_i)
 

@@ -1,6 +1,11 @@
 class Api::V1::RatesController < Api::V1::BaseController
   before_action :set_post, only: [:create]
 
+  api :POST, '/v1/posts/:id/rates', I18n.t('doc.v1.rates.create')
+  param :rate, Hash do
+    param :rate, [1, 2, 3, 4, 5], required: true
+  end
+  param :post_id, :number, required: true
   def create
     @handler = RateHandler.execute(rate_params, @post)
 

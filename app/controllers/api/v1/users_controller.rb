@@ -1,4 +1,5 @@
 class Api::V1::UsersController < Api::V1::BaseController
+  api :GET, '/v1/users/ip_groups', I18n.t('doc.v1.users.ip_groups')
   def ip_groups
     @ip_groups = IPGroupsService.execute
 

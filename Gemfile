@@ -18,6 +18,9 @@ gem 'rails_ip_validator'
 
 gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 
+# API Documentation Tool
+gem 'apipie-rails', github: 'Apipie/apipie-rails'
+
 group :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'

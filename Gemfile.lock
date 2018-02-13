@@ -1,4 +1,11 @@
 GIT
+  remote: https://github.com/Apipie/apipie-rails.git
+  revision: 75a16bdcef364b5ac76b10fc353f91f86a3b083d
+  specs:
+    apipie-rails (0.5.6)
+      rails (>= 4.1)
+
+GIT
   remote: https://github.com/rails-api/active_model_serializers.git
   revision: 41f2e11c4d9188d22d230171f065c0c5d9c80e25
   branch: 0-10-stable
@@ -181,6 +188,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers!
+  apipie-rails!
   byebug
   factory_bot_rails
   faker!
