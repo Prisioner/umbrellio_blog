@@ -30,4 +30,22 @@ RSpec.describe Post, type: :model do
       expect(Post.top(2)).to eq [post1, post2]
     end
   end
+
+  describe '#refresh_rating' do
+    let!(:post_params) { attributes_for(:post) }
+    let!(:post) { Post.find(PostHandler.execute(post_params).id) }
+
+    before do
+      RateHandler.execute({ rate: 5 }, post)
+      Rate.create(rate: 4, post: post)
+    end
+
+    it 'updates post rating' do
+      expect { post.refresh_rating }.to change(post, :rating).from(5).to(4.5)
+    end
+
+    it 'returns new rating' do
+      expect(post.refresh_rating).to eq 4.5
+    end
+  end
 end
