@@ -18,6 +18,13 @@ gem 'rails_ip_validator'
 
 gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
 
+group :test do
+  gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'shoulda-matchers'
+  gem 'rails-controller-testing'
+end
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
