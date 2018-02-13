@@ -16,6 +16,8 @@ gem 'active_model_serializers', github: 'rails-api/active_model_serializers', br
 gem 'ipaddress'
 gem 'rails_ip_validator'
 
+gem 'faker', :git => 'https://github.com/stympy/faker.git', :branch => 'master'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
