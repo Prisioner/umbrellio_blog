@@ -7,7 +7,7 @@ class PostHandler
   validates :ip, presence: true, ip: true
   validates :username, presence: true
 
-  attr_reader :username, :title, :body, :ip
+  attr_reader :username, :title, :body, :ip, :id
 
   def self.execute(params)
     self.new(params).tap do |handler|
@@ -30,6 +30,8 @@ class PostHandler
         handler.body = @body
         handler.ip = @ip
         handler.save
+
+        @id = handler.id
       end
     end
   end
