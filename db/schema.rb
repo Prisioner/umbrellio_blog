@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180208220825) do
+ActiveRecord::Schema.define(version: 20180218170344) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,14 +18,14 @@ ActiveRecord::Schema.define(version: 20180208220825) do
   create_table "posts", force: :cascade do |t|
     t.string "title"
     t.text "body"
-    t.string "ip"
     t.float "rating", default: 0.0
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["ip"], name: "index_posts_on_ip"
+    t.bigint "user_ip_id"
     t.index ["rating"], name: "index_posts_on_rating"
     t.index ["user_id"], name: "index_posts_on_user_id"
+    t.index ["user_ip_id"], name: "index_posts_on_user_ip_id"
   end
 
   create_table "rates", force: :cascade do |t|
@@ -36,6 +36,20 @@ ActiveRecord::Schema.define(version: 20180208220825) do
     t.index ["post_id"], name: "index_rates_on_post_id"
   end
 
+  create_table "user_ips", force: :cascade do |t|
+    t.string "ip"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ip"], name: "index_user_ips_on_ip", unique: true
+  end
+
+  create_table "user_ips_users", id: false, force: :cascade do |t|
+    t.bigint "user_ip_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id", "user_ip_id"], name: "index_user_ips_users_on_user_id_and_user_ip_id"
+    t.index ["user_ip_id", "user_id"], name: "index_user_ips_users_on_user_ip_id_and_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username"
     t.datetime "created_at", null: false
@@ -43,6 +57,7 @@ ActiveRecord::Schema.define(version: 20180208220825) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "posts", "user_ips"
   add_foreign_key "posts", "users"
   add_foreign_key "rates", "posts"
 end

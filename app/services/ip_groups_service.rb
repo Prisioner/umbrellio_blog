@@ -1,6 +1,13 @@
 class IPGroupsService
   def self.execute
-    query = 'SELECT DISTINCT users.username, posts.ip FROM users INNER JOIN posts ON users.id = posts.user_id;'
+    query = <<-SQL
+      SELECT DISTINCT uip.ip, u.username
+      FROM user_ips AS uip
+      INNER JOIN user_ips_users AS uip_u
+        ON uip_u.user_ip_id = uip.id
+      INNER JOIN users AS u
+        ON u.id = uip_u.user_id;
+    SQL
 
     # only uniq pairs username + ip in array like below
     # [{'username' => 'Vasya', 'ip' => '1.2.3.4'}, {'username' => 'Petya', 'ip' => '4.3.2.1'},

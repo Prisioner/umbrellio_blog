@@ -28,7 +28,7 @@ class PostHandler
         handler.user = User.find_or_create_by(username: @username)
         handler.title = @title
         handler.body = @body
-        handler.ip = @ip
+        handler.user_ip = UserIp.find_or_create_by(ip: @ip)
         handler.save
 
         @id = handler.id
