@@ -32,6 +32,7 @@ class RateHandler
   end
 
   def refresh_post_rating
-    @rating = @post.refresh_rating
+    @rating = Rate.where(post: @post).average(:rate)
+    @post.update(rating: @rating)
   end
 end
