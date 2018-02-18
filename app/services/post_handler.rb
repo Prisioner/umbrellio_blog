@@ -23,16 +23,11 @@ class PostHandler
   end
 
   def create_post
-    if valid?
-      Post.new.tap do |handler|
-        handler.user = User.find_or_create_by(username: @username)
-        handler.title = @title
-        handler.body = @body
-        handler.user_ip = UserIp.find_or_create_by(ip: @ip)
-        handler.save
-
-        @id = handler.id
-      end
-    end
+    @id = Post.create(
+      user: User.find_or_create_by(username: @username),
+      title: @title,
+      body: @body,
+      user_ip: UserIp.find_or_create_by(ip: @ip)
+    ).id if valid?
   end
 end
