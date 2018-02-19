@@ -23,11 +23,18 @@ class PostHandler
   end
 
   def create_post
-    @id = Post.create(
-      user: User.find_or_create_by(username: @username),
-      title: @title,
-      body: @body,
-      user_ip: UserIp.find_or_create_by(ip: @ip)
-    ).id if valid?
+    if valid?
+      user = User.find_or_create_by(username: @username)
+      user_ip = UserIp.find_or_create_by(ip: @ip)
+
+      @id = Post.create(
+              user: user,
+              title: @title,
+              body: @body,
+              user_ip: user_ip
+            ).id
+
+      user_ip.users << user unless user_ip.users.include?(user)
+    end
   end
 end
