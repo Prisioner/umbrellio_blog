@@ -1,5 +1,5 @@
 class Api::V1::RatesController < Api::V1::BaseController
-  before_action :set_post, only: [:create]
+  before_action :set_post_for_update, only: [:create]
 
   api :POST, '/v1/posts/:id/rates', I18n.t('doc.v1.rates.create')
   param :rate, Hash do
@@ -20,8 +20,8 @@ class Api::V1::RatesController < Api::V1::BaseController
 
   private
 
-  def set_post
-    @post = Post.find(params[:post_id])
+  def set_post_for_update
+    @post = Post.lock.find(params[:post_id])
   end
 
   def rate_params
